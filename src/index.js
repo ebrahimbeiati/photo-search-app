@@ -1,6 +1,5 @@
-// src/index.js
+import ReactDOM from "react-dom"; // Use default import for ReactDOM
 import React from "react";
-import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 
@@ -10,3 +9,4 @@ root.render(
     <App />
   </React.StrictMode>
 );
+

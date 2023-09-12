@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import NavBar from "./NavBar";
 import PhotoCard from "./PhotoCard";
+import axios from "axios"; // Import Axios
+
 
 function SearchResults() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -10,37 +12,30 @@ function SearchResults() {
   const GOOGLE_API_KEY = "GOOGLE_API_KEY"; // Replace with your Google API key
   const CX = "CUSTOM_SEARCH_ENGINE_ID"; // Replace with your Custom Search Engine ID
 
-  const handleSearch = async () => {
-    try {
-      setError(null); // Clear any previous errors
-      const response = await fetch(
-        `https://www.googleapis.com/customsearch/v1?q=${searchQuery}&key=${GOOGLE_API_KEY}&cx=${CX}`
+const handleSearch = async () => {
+  try {
+    setError(null); // Clear any previous errors
+    const response = await axios.get(
+      `https://www.googleapis.com/customsearch/v1?q=${searchQuery}&key=${GOOGLE_API_KEY}&cx=${CX}`
+    );
+
+    // Check if the response contains an 'items' array
+    if (response.data.items && Array.isArray(response.data.items)) {
+      // Extract image results from the data (modify this according to the API response structure)
+      const imageResults = response.data.items.filter(
+        (item) => item.pagemap && item.pagemap.cse_image
       );
 
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-
-      const data = await response.json();
-
-      // Check if the response contains an 'items' array
-      if (data.items && Array.isArray(data.items)) {
-        // Extract image results from the data (modify this according to the API response structure)
-        const imageResults = data.items.filter(
-          (item) => item.pagemap && item.pagemap.cse_image
-        );
-
-        setResults(imageResults);
-      } else {
-        throw new Error("Invalid response data format");
-      }
-    } catch (error) {
-      console.error(error);
-      setError(
-        "An error occurred while fetching data. Please try again later."
-      );
+      setResults(imageResults);
+    } else {
+      throw new Error("Invalid response data format");
     }
-  };
+  } catch (error) {
+    console.error(error);
+    setError("An error occurred while fetching data. Please try again later.");
+  }
+};
+
 
   return (
     <div>
