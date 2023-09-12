@@ -7,8 +7,8 @@ function SearchResults() {
   const [results, setResults] = useState([]);
   const [error, setError] = useState(null);
 
-  const GOOGLE_API_KEY = "YOUR_GOOGLE_API_KEY"; // Replace with your Google API key
-  const CX = "YOUR_CUSTOM_SEARCH_ENGINE_ID"; // Replace with your Custom Search Engine ID
+  const GOOGLE_API_KEY = "GOOGLE_API_KEY"; // Replace with your Google API key
+  const CX = "CUSTOM_SEARCH_ENGINE_ID"; // Replace with your Custom Search Engine ID
 
   const handleSearch = async () => {
     try {
