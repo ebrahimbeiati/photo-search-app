@@ -8,9 +8,9 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route exact path="/" component={Home} />{" "}
+        <Route exact path="/" components={Home} />{" "}
         {/* Render the Home component for the root route */}
-        <Route path="/search" component={SearchResults} />
+        <Route path="/search" components={SearchResults} />
       </Routes>
     </Router>
   );
