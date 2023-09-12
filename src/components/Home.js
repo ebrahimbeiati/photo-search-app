@@ -9,6 +9,9 @@ function Home() {
         Play
       </button>
       <p className="mt-4 text-white text-lg">Tap to start</p>
+      <Link to="/search" className="mt-8 text-white text-lg underline">
+        Go to Search
+      </Link>
     </div>
   );
 }

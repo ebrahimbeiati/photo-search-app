@@ -1,22 +1,30 @@
-// src/components/SearchResults.js
 import React, { useState } from "react";
-import axios from "axios";
+import NavBar from "./NavBar";
+import PhotoCard from "./PhotoCard";
 
 function SearchResults() {
   const [searchQuery, setSearchQuery] = useState("");
   const [results, setResults] = useState([]);
 
+  const GOOGLE_API_KEY = "YOUR_GOOGLE_API_KEY"; // Replace with your Google API key
+  const CX = "YOUR_CUSTOM_SEARCH_ENGINE_ID"; // Replace with your Custom Search Engine ID
+
   const handleSearch = async () => {
     try {
-      const response = await axios.get(
-        `https://api.unsplash.com/search/photos?query=${searchQuery}`,
-        {
-          headers: {
-            Authorization: "Client-ID YOUR_UNSPLASH_ACCESS_KEY",
-          },
-        }
+      const response = await fetch(
+        `https://www.googleapis.com/customsearch/v1?q=${searchQuery}&key=${GOOGLE_API_KEY}&cx=${CX}`
       );
-      setResults(response.data.results);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+
+      // Extract image results from the data (modify this according to the API response structure)
+      const imageResults = data.items.filter(
+        (item) => item.pagemap && item.pagemap.cse_image
+      );
+
+      setResults(imageResults);
     } catch (error) {
       console.error(error);
     }
@@ -40,8 +48,8 @@ function SearchResults() {
         />
       </div>
       <div className="container mx-auto p-4 grid grid-cols-2 sm:grid-cols-4 gap-4">
-        {results.map((photo) => (
-          <PhotoCard key={photo.id} photo={photo} />
+        {results.map((photo, index) => (
+          <PhotoCard key={index} photo={photo} />
         ))}
       </div>
     </div>

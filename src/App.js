@@ -1,4 +1,4 @@
-
+// src/App.js
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./components/Home";
@@ -8,7 +8,8 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route exact path="/" component={Home} />
+        <Route exact path="/" component={Home} />{" "}
+        {/* Render the Home component for the root route */}
         <Route path="/search" component={SearchResults} />
       </Routes>
     </Router>
